@@ -1,0 +1,14 @@
+@use 'sass:color';
+
+@mixin card-style($color) {
+    background-color: $color;
+    border: 1px solid color.adjust($color, $lightness: -10%);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+@mixin button-style($color) {
+    background-color: $color;
+    border: none;
+    border-radius: 5%;
+}

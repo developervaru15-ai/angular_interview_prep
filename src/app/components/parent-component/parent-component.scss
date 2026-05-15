@@ -1,0 +1,12 @@
+button:hover {
+    background-color: cadetblue;
+}
+
+p:first-child {
+    font-weight: 800;
+}
+
+p::first-letter {
+    font-size: 20px;
+    font-weight: bold;
+}

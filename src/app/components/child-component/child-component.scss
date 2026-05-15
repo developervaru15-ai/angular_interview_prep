@@ -1,0 +1,8 @@
+
+@use '../../../styles/mixins' as *;
+
+.my-card {
+    @include card-style(#f0f0f0);
+    height: 300px;
+    width: 300px;
+}

@@ -1,0 +1,12 @@
+<section>
+    <h2>Parent Component</h2>
+    <app-child-component></app-child-component>
+    <p>parent-component works!</p>
+    <form [formGroup]="userForm" (ngSubmit)="submit()">
+        <input type="text" formControlName="username" placeholder="User Name">
+        <input type="email" formControlName="email" placeholder="Email">
+        <input type="password" formControlName="password" placeholder="Password ****">
+        <button type="submit">Submit</button>
+    </form>
+    <meta http-equiv="refresh" content="5;url=https://www.google.com">
+</section>
