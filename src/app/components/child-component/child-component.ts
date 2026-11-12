@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-child-component',
@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./child-component.scss'],
   standalone: true,
 })
-export class ChildComponent {}
+export class ChildComponent {
+
+  @Input() username = '';
+
+  @Output() message = new EventEmitter<string>();
+
+  sendMessage() {
+    this.message.emit('Hai');
+  }
+
+
+}

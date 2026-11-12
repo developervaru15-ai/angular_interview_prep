@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "run:java": "mkdir -p .run/java && javac -d .run/java dsa.java && java -cp .run/java Solution",
+    "run:ts": "node --experimental-strip-types dsa.ts"
   },
   "private": true,
   "packageManager": "npm@11.6.2",

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /**
@@ -13,11 +13,25 @@ import { map } from 'rxjs/operators';
 
 export interface User {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
+  maidenName: string;
+  age: number;
+  gender: string;
   email: string;
-  role: 'admin' | 'user';
+  phone: string;
+  username: string;
+  image: string;
 }
 
+export interface UsersResponse {
+  users: User[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
+// Generic envelope example; DummyJSON's user-list endpoint uses UsersResponse.
 export interface ApiResponse<T> {
   data: T;
   status: number;
@@ -28,11 +42,17 @@ export interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://api.example.com/api/users';
+  private apiUrl = 'https://dummyjson.com/users';
   
   // BehaviorSubject for state management
   private userListSubject = new BehaviorSubject<User[]>([]);
   public userList$ = this.userListSubject.asObservable();
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingSubject.asObservable();
+
+  private loadErrorSubject = new BehaviorSubject<string | null>(null);
+  public loadError$ = this.loadErrorSubject.asObservable();
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -45,9 +65,9 @@ export class UserService {
    * Get all users
    */
   getUsers(): Observable<User[]> {
-    return this.http.get<ApiResponse<User[]>>(`${this.apiUrl}`)
+    return this.http.get<UsersResponse>(this.apiUrl)
       .pipe(
-        map(response => response.data)
+        map(response => response.users)
       );
   }
 
@@ -55,30 +75,21 @@ export class UserService {
    * Get user by ID
    */
   getUserById(id: number): Observable<User> {
-    return this.http.get<ApiResponse<User>>(`${this.apiUrl}/${id}`)
-      .pipe(
-        map(response => response.data)
-      );
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
   /**
    * Create a new user
    */
-  createUser(user: Omit<User, 'id'>): Observable<User> {
-    return this.http.post<ApiResponse<User>>(this.apiUrl, user)
-      .pipe(
-        map(response => response.data)
-      );
+  createUser(user: Partial<User>): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/add`, user);
   }
 
   /**
    * Update user
    */
   updateUser(id: number, user: Partial<User>): Observable<User> {
-    return this.http.put<ApiResponse<User>>(`${this.apiUrl}/${id}`, user)
-      .pipe(
-        map(response => response.data)
-      );
+    return this.http.put<User>(`${this.apiUrl}/${id}`, user);
   }
 
   /**
@@ -92,10 +103,25 @@ export class UserService {
    * Load users into BehaviorSubject
    */
   private loadUsers(): void {
-    this.getUsers().subscribe(
-      users => this.userListSubject.next(users),
-      error => console.error('Error loading users:', error)
-    );
+    this.loadingSubject.next(true);
+    this.loadErrorSubject.next(null);
+
+    this.getUsers()
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe({
+        next: users => this.userListSubject.next(users),
+        error: error => {
+          console.error('Error loading users from DummyJSON:', error);
+          this.loadErrorSubject.next('Unable to load users. Check your connection and try again.');
+        },
+      });
+  }
+
+  /**
+   * Reload users from the API
+   */
+  refreshUsers(): void {
+    this.loadUsers();
   }
 
   /**
@@ -118,7 +144,7 @@ export class UserService {
   searchUsers(searchTerm: string): Observable<User[]> {
     return this.userList$.pipe(
       map(users => users.filter(user => 
-        user.name.toLowerCase().includes(searchTerm.toLowerCase())
+        `${user.firstName} ${user.lastName}`.toLowerCase().includes(searchTerm.toLowerCase())
       ))
     );
   }

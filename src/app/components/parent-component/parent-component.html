@@ -1,12 +1,62 @@
-<section>
-    <h2>Parent Component</h2>
-    <app-child-component></app-child-component>
-    <p>parent-component works!</p>
-    <form [formGroup]="userForm" (ngSubmit)="submit()">
-        <input type="text" formControlName="username" placeholder="User Name">
-        <input type="email" formControlName="email" placeholder="Email">
-        <input type="password" formControlName="password" placeholder="Password ****">
-        <button type="submit">Submit</button>
-    </form>
-    <meta http-equiv="refresh" content="5;url=https://www.google.com">
+<section class="parent-page">
+  <div class="page-heading">
+    <div>
+      <span class="eyebrow">YOUR PRACTICE WORKSPACE</span>
+      <h1>Build your Angular skills</h1>
+      <p>Explore component communication, reactive forms, and the fundamentals behind them.</p>
+    </div>
+    <span class="module-badge"><span></span> Module 01 · Components</span>
+  </div>
+
+  <div class="practice-grid">
+    <section class="practice-card communication-card">
+      <div class="card-heading">
+        <div>
+          <span class="card-label">01 / COMPONENTS</span>
+          <h2>Parent &amp; child communication</h2>
+        </div>
+        <span class="icon-badge">↔</span>
+      </div>
+      <p class="card-description">Pass data down with <code>@Input()</code> and send events back up with <code>@Output()</code>.</p>
+
+      <app-child-component [username]="name" (message)="recevieMessage($event)"></app-child-component>
+
+      <div class="message-result" aria-live="polite">
+        <span class="result-icon">✦</span>
+        <div>
+          <span class="result-label">MESSAGE FROM CHILD</span>
+          <p>{{ message || 'Use the button above to send a message to the parent.' }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="practice-card form-card">
+      <div class="card-heading">
+        <div>
+          <span class="card-label">02 / REACTIVE FORMS</span>
+          <h2>Form validation</h2>
+        </div>
+        <span class="icon-badge">✓</span>
+      </div>
+      <p class="card-description">Practice building a form with required fields and email validation.</p>
+
+      <form [formGroup]="userForm" (ngSubmit)="submit()">
+        <label for="username">User name</label>
+        <input id="username" type="text" formControlName="username" placeholder="e.g. Alex Morgan" autocomplete="username">
+
+        <label for="email">Email address</label>
+        <input id="email" type="email" formControlName="email" placeholder="alex@example.com" autocomplete="email">
+
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" placeholder="At least 6 characters" autocomplete="new-password">
+
+        <button type="submit">Validate form <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+  </div>
+
+  <footer class="page-footer">
+    <span class="footer-check">✓</span>
+    <span><strong>Keep experimenting.</strong> The best way to learn Angular is to try it yourself.</span>
+  </footer>
 </section>

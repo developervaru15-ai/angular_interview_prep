@@ -1,8 +1,86 @@
+.child-demo {
+  padding: 18px;
+  border: 1px solid #edf0f5;
+  border-radius: 14px;
+  background: #fbfcff;
+}
 
-@use '../../../styles/mixins' as *;
+.child-demo-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
 
-.my-card {
-    @include card-style(#f0f0f0);
-    height: 300px;
-    width: 300px;
+.child-kicker {
+  color: #8a91a3;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+.child-demo h3 {
+  margin: 7px 0 0;
+  color: #242d42;
+  font-size: 17px;
+  letter-spacing: -0.03em;
+}
+
+.input-chip {
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: #e9f7f3;
+  color: #168566;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.child-description {
+  margin: 8px 0 14px;
+  color: #7a8295;
+  font-size: 12px;
+}
+
+.child-output {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px;
+  border-radius: 9px;
+  background: #f1f0ff;
+  color: #626a80;
+  font-size: 11px;
+}
+
+.child-output strong {
+  color: #554ce1;
+  font-family: monospace;
+}
+
+.output-arrow {
+  color: #6259ed;
+  font-size: 16px;
+}
+
+.send-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 13px;
+  padding: 11px 13px;
+  border: 0;
+  border-radius: 9px;
+  background: #252e43;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 160ms ease;
+}
+
+.send-button:hover {
+  background: #414c67;
 }

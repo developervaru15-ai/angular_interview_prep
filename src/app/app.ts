@@ -1,11 +1,14 @@
 import { Component, signal } from '@angular/core';
-import { email } from '@angular/forms/signals';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
 
+interface Employee {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -85,7 +88,102 @@ export class App {
 
     const increment = this.counter();
     console.log(increment()); // 1
+
+
+
+
   }
+
+  employees: Employee[] = [
+    {
+      id: 1,
+      name: 'Rahul'
+    },
+    { id: 2, name: 'Amit' },
+    { id: 1, name: 'Rahul Updated' },
+    { id: 3, name: 'Priya' },
+    { id: 2, name: 'Amit Updated' }
+  ];
+
+
+  removeDuplicates(employees: Employee[]): Employee[] {
+    const seen = new Set<number>();
+
+    return employees.filter(employee => {
+      if (seen.has(employee.id)) {
+        return false;
+      }
+
+      seen.add(employee.id);
+      return true;
+    });
+  }
+
+  findSecondLargest(numbers: number[]): number | null {
+
+    let largest = -Infinity;
+    let secondLargest = -Infinity;
+
+    for (const num of numbers) {
+      if (num > largest) {
+        secondLargest = largest;
+        largest = num
+      } else if (num < largest && num > secondLargest) {
+        secondLargest = num;
+      }
+    }
+
+    return secondLargest === -Infinity ? null : secondLargest;
+
+  }
+
+  countCharacters(input: string): Record<string, number> {
+
+    const frequency: Record<string, number> = {};
+
+    for (const char of input) {
+      frequency[char] = (frequency[char] || 0) + 1;
+    }
+
+    return frequency;
+  }
+
+  findDuplicatesPractise(arr: number[]): number[] {
+
+    const seen = new Set<number>();
+    const duplicates = new Set<number>();
+
+    for (const num of arr) {
+      if (seen.has(num)) {
+        duplicates.add(num);
+      } else {
+        seen.add(num)
+      }
+    }
+
+    return [...duplicates];
+  }
+
+  flattenNestedArray(arr1: number[], arr2: number[]): number[] {
+    const nums = [...arr1, ...arr2].flat(Infinity);
+    return nums;
+  }
+
+  flattenNestedArrayy(arr: number[]): number[] {
+    return arr.flat(Infinity);
+  }
+
+  findMissingNumber(nums: number[]): number {
+    const n = nums.length + 1;
+
+    const expectedSum = (n * (n + 1)) / 2;
+
+    const actualSum = nums.reduce((sum, num) => sum + num, 0);
+
+    return expectedSum - actualSum;
+
+  }
+
 
   counter() {
     let count = 0;

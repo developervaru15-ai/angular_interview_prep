@@ -1,7 +1,17 @@
-<section>
-    <h2>Child Component</h2>
-    <div class="my-card">
-        <p>child-component works!</p>
+<section class="child-demo">
+  <div class="child-demo-heading">
+    <div>
+      <span class="child-kicker">CHILD COMPONENT</span>
+      <h3>Hello, {{ username }} <span aria-hidden="true">👋</span></h3>
     </div>
+    <span class="input-chip">@Input</span>
+  </div>
+  <p class="child-description">This name was passed from the parent component.</p>
+  <div class="child-output">
+    <span class="output-arrow" aria-hidden="true">↗</span>
+    <span><strong>@Output</strong> sends an event back to the parent</span>
+  </div>
+  <button class="send-button" type="button" (click)="sendMessage()">
+    Send a message to parent <span aria-hidden="true">→</span>
+  </button>
 </section>
-

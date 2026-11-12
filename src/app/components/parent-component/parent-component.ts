@@ -12,6 +12,9 @@ export class ParentComponent {
 
   userForm!: FormGroup;
 
+  name = 'varun';
+  message = '';
+
   constructor(
     private fb: FormBuilder,
     private ngZone: NgZone,
@@ -20,8 +23,6 @@ export class ParentComponent {
     ngZone.run(() => {
       console.log('This code is running inside Angular zone');
     });
-
-
 
     this.userForm = fb.group({
       username: ['', Validators.required],
@@ -37,9 +38,13 @@ export class ParentComponent {
       setInterval(() => {
         location.reload();
       }, 5000);
-      
+
     } else {
       alert('Form is invalid. Please check the fields and try again.');
     }
+  }
+
+  recevieMessage(value: string) {
+    this.message = value;
   }
 }

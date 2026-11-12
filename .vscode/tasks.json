@@ -37,6 +37,30 @@
           }
         }
       }
+    },
+    {
+      "label": "Run DSA Java",
+      "type": "npm",
+      "script": "run:java",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "Run DSA TypeScript",
+      "type": "npm",
+      "script": "run:ts",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      }
     }
   ]
 }
